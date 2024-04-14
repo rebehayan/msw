@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import ProductItem from "./components/ProductItem";
+import UserItem from "./components/UserItem";
 
 interface List {
   id: number;
@@ -23,8 +25,8 @@ function App() {
 
   const fetchPost = async () => {
     try {
-      const response = await axios.get<List[]>("/products");
-      setIslist(response.data);
+      const { data } = await axios.get<List[]>("/products");
+      setIslist(data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -33,8 +35,8 @@ function App() {
   };
   const fetchUser = async () => {
     try {
-      const response = await axios.get<User[]>("/users");
-      setUsers(response.data);
+      const { data } = await axios.get<User[]>("/users");
+      setUsers(data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -47,23 +49,10 @@ function App() {
     fetchUser();
   }, []);
 
-  console.log(users);
   return (
     <>
-      <ul>
-        {islist.map((item) => (
-          <li key={item.id}>
-            {item.id} {item.brand} {item.name} {item.price} {item.rate} {item.review}
-          </li>
-        ))}
-      </ul>
-      <ul>
-        {users.map((item) => (
-          <li key={item.id}>
-            {item.id} {item.name} {item.birth} {item.city} {item.address}
-          </li>
-        ))}
-      </ul>
+      <ul>{islist && islist?.map((item, index) => <ProductItem key={index} items={item} />)}</ul>
+      <ul>{users && users?.map((item) => <UserItem key={item.id} items={item} />)}</ul>
     </>
   );
 }

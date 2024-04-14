@@ -9,5 +9,4 @@ const usersResolver = () => {
   return HttpResponse.json({ user });
 };
 
-export const handlers = [http.get("/products", productsResolver)];
-export const userHandlers = [http.get("/users", usersResolver)];
+export const handlers = [http.get("/products", productsResolver), http.get("/users", usersResolver)];
