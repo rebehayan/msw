@@ -27,6 +27,7 @@ function App() {
     try {
       const { data } = await axios.get<List[]>("/products");
       setIslist(data);
+      console.log(data);
     } catch (error) {
       console.log(error);
     } finally {
